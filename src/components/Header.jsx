@@ -9,11 +9,24 @@ function Header() {
   const location = useLocation();
 
   const navItems = [
-    { path: "/", label: "Bosh sahifa" },
-    { path: "/music", label: "Musiqa" },
-    { path: "/shorts", label: "Videolar" },
-    { path: "/pictures", label: "Rasmlar" },
-    { path: "/about", label: "Biz haqimizda" },
+ codex/add-missing-features-to-the-site-jfkoe5
+    {
+  path: "/",
+  label: "Bosh sahifa",
+},
+{
+  path: "/music",
+  label: "Musiqa",
+},
+{
+  path: "/shorts",
+  label: "Qisqa videolar",
+},
+{
+  path: "/pictures",
+  label: "Rasmlar",
+},
+
   ];
 
   const isActive = (path) => location.pathname === path;

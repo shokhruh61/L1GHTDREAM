@@ -130,7 +130,12 @@ function About() {
             </Link>
             <Link 
               to="/pictures"
+ codex/add-missing-features-to-the-site-jfkoe5
               className="bg-gray-300 text-gray-900 font-bold py-3 px-8 rounded-lg cursor-pointer transition-all duration-200 hover:bg-gray-400 hover:scale-[1.02] active:scale-[0.98]"
+
+              className="bg-gray-300 hover:bg-gray-400 text-gray-900 font-bold py-3 px-8 rounded-lg cursor-pointer transition-all duration-300"
+
+ main
             >
               Rasmlarni ko‘rish
             </Link>

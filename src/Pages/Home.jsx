@@ -38,9 +38,25 @@ function Home() {
               >
                 Musiqani ko‘rish
               </Link>
+ codex/add-missing-features-to-the-site-jfkoe5
               <Link
                 to="/pictures"
                 className="bg-gray-200 text-gray-900 font-bold py-3 px-8 rounded-lg text-center cursor-pointer transition-all duration-200 hover:bg-gray-300 hover:scale-[1.02] active:scale-[0.98]"
+
+             <Link
+  to="/pictures"
+  className="bg-gray-200 hover:bg-gray-300 text-gray-900 font-bold py-3 px-8 rounded-lg text-center cursor-pointer transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]"
+>
+
+ main<Link
+  to="/pictures"
+  className="bg-gray-200 hover:bg-gray-300 text-gray-900 font-bold py-3 px-8 rounded-lg text-center cursor-pointer transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]"
+>
+<Link
+  to="/pictures"
+  className="bg-gray-200 hover:bg-gray-300 text-gray-900 font-bold py-3 px-8 rounded-lg text-center cursor-pointer transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]"
+>
+
               >
                 Galereyani ko‘rish
               </Link>
