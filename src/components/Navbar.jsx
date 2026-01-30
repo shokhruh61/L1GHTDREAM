@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 
 const navLinks = [
-  { path: "/", label: "Home" },
-  { path: "/music", label: "Music" },
-  { path: "/shorts", label: "Videos" },
-  { path: "/about", label: "About" },
-  { path: "/favorites", label: "Favorites" },
+  { path: "/", label: "Bosh sahifa" },
+  { path: "/music", label: "Musiqa" },
+  { path: "/shorts", label: "Videolar" },
+  { path: "/about", label: "Biz haqimizda" },
+  { path: "/sevimlilar", label: "Sevimlilar" },
 ];
 
 function Navbar() {
@@ -18,21 +18,26 @@ function Navbar() {
   const handleSearch = (event) => {
     event.preventDefault();
     if (!query.trim()) return;
-    navigate(`/search?q=${encodeURIComponent(query.trim())}`);
+    navigate(`/qidiruv?q=${encodeURIComponent(query.trim())}`);
     setIsSearchOpen(false);
     setIsMobileOpen(false);
   };
 
   const activeClass = ({ isActive }) =>
-    `text-sm font-semibold transition ${
-      isActive ? "text-blue-600" : "text-gray-600 hover:text-gray-900"
+    `text-sm font-semibold transition-all duration-200 cursor-pointer ${
+      isActive
+        ? "text-blue-600"
+        : "text-gray-600 hover:text-gray-900 hover:scale-[1.02]"
     }`;
 
   return (
     <header className="sticky top-0 z-50 bg-white/90 backdrop-blur border-b border-gray-200">
       <div className="container mx-auto px-4">
         <nav className="flex items-center justify-between h-16">
-          <Link to="/" className="flex items-center gap-2 font-bold text-xl text-gray-900">
+          <Link
+            to="/"
+            className="flex items-center gap-2 font-bold text-xl text-gray-900 cursor-pointer transition-all duration-200 hover:text-blue-600 active:scale-[0.98]"
+          >
             <span className="text-2xl">🎵</span>
             M1NOR FM
           </Link>
@@ -47,12 +52,12 @@ function Navbar() {
 
           <form
             onSubmit={handleSearch}
-            className="hidden lg:flex items-center gap-2 bg-gray-100 px-3 py-2 rounded-full border border-gray-200"
+            className="hidden lg:flex items-center gap-2 bg-gray-100 px-3 py-2 rounded-full border border-gray-200 transition-all duration-200 focus-within:border-blue-600"
           >
             <span className="text-gray-500">🔎</span>
             <input
               type="search"
-              placeholder="Search music, videos..."
+              placeholder="Musiqa, video qidiring..."
               value={query}
               onChange={(event) => setQuery(event.target.value)}
               className="bg-transparent outline-none text-sm text-gray-700 w-56"
@@ -63,16 +68,16 @@ function Navbar() {
             <button
               type="button"
               onClick={() => setIsSearchOpen(true)}
-              className="p-2 rounded-full bg-gray-100"
-              aria-label="Open search"
+              className="p-2 rounded-full bg-gray-100 cursor-pointer transition-all duration-200 hover:bg-gray-200 active:scale-[0.98]"
+              aria-label="Qidiruvni ochish"
             >
               🔍
             </button>
             <button
               type="button"
               onClick={() => setIsMobileOpen((prev) => !prev)}
-              className="p-2 rounded-full bg-gray-100"
-              aria-label="Toggle menu"
+              className="p-2 rounded-full bg-gray-100 cursor-pointer transition-all duration-200 hover:bg-gray-200 active:scale-[0.98]"
+              aria-label="Menyuni ochish"
             >
               {isMobileOpen ? "✖️" : "☰"}
             </button>
@@ -89,8 +94,10 @@ function Navbar() {
                 to={link.path}
                 onClick={() => setIsMobileOpen(false)}
                 className={({ isActive }) =>
-                  `rounded-lg px-3 py-2 text-sm font-semibold ${
-                    isActive ? "bg-blue-600 text-white" : "text-gray-700 hover:bg-gray-100"
+                  `rounded-lg px-3 py-2 text-sm font-semibold cursor-pointer transition-all duration-200 active:scale-[0.98] ${
+                    isActive
+                      ? "bg-blue-600 text-white"
+                      : "text-gray-700 hover:bg-gray-100 hover:scale-[1.02]"
                   }`
                 }
               >
@@ -111,28 +118,32 @@ function Navbar() {
             onClick={(event) => event.stopPropagation()}
           >
             <div className="flex items-center justify-between mb-6">
-              <h3 className="text-lg font-bold text-gray-900">Search</h3>
-              <button type="button" onClick={() => setIsSearchOpen(false)}>
+              <h3 className="text-lg font-bold text-gray-900">Qidiruv</h3>
+              <button
+                type="button"
+                onClick={() => setIsSearchOpen(false)}
+                className="cursor-pointer transition-all duration-200 hover:opacity-70 active:scale-[0.98]"
+              >
                 ✖️
               </button>
             </div>
             <form onSubmit={handleSearch} className="flex flex-col gap-4">
               <input
                 type="search"
-                placeholder="Search music, videos..."
+                placeholder="Musiqa yoki video qidiring..."
                 value={query}
                 onChange={(event) => setQuery(event.target.value)}
                 className="w-full border border-gray-300 rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-blue-600"
               />
               <button
                 type="submit"
-                className="bg-blue-600 text-white font-semibold py-3 rounded-lg hover:bg-blue-700 transition"
+                className="bg-blue-600 text-white font-semibold py-3 rounded-lg cursor-pointer transition-all duration-200 hover:bg-blue-700 hover:scale-[1.02] active:scale-[0.98]"
               >
-                Search
+                Qidirish
               </button>
             </form>
             <p className="text-xs text-gray-500 mt-6">
-              Try searching for artists, moods, or your saved favorites.
+              Ijrochi, kayfiyat yoki sevimlilar orqali qidiring.
             </p>
           </div>
         </div>

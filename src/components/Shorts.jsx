@@ -30,7 +30,7 @@ export default function Shorts() {
         setNextPageToken(nextPageToken);
         setCurrentPage(1);
       } catch (err) {
-        setError(getErrorMessage(err, "Failed to load shorts"));
+        setError(getErrorMessage(err, "Qisqa videolarni yuklab bo‘lmadi"));
       } finally {
         setLoading(false);
       }
@@ -51,7 +51,7 @@ export default function Shorts() {
       setShorts((prev) => [...prev, ...items]);
       setNextPageToken(token);
     } catch (err) {
-      setError(getErrorMessage(err, "Failed to load more shorts"));
+      setError(getErrorMessage(err, "Ko‘proq qisqa video yuklab bo‘lmadi"));
     } finally {
       setLoadingMore(false);
     }
@@ -130,7 +130,7 @@ export default function Shorts() {
   if (error) {
     return (
       <section className="min-h-screen bg-white flex items-center justify-center">
-        <div className="text-lg font-semibold text-red-600">Error: {error}</div>
+        <div className="text-lg font-semibold text-red-600">Xatolik: {error}</div>
       </section>
     );
   }
@@ -140,14 +140,14 @@ export default function Shorts() {
       <div className="max-w-7xl mx-auto">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
           <h2 className="text-4xl font-bold text-center sm:text-left">
-            Shorts
+            Qisqa videolar
           </h2>
           <div className="flex items-center gap-2 justify-center sm:justify-end">
             <button
               onClick={() => setShowAll((v) => !v)}
-              className="px-4 py-2 rounded-lg border border-gray-300 bg-white hover:bg-gray-100 text-sm font-semibold"
+              className="px-4 py-2 rounded-lg border border-gray-300 bg-white text-sm font-semibold cursor-pointer transition-all duration-200 hover:bg-gray-100 hover:scale-[1.02] active:scale-[0.98]"
             >
-              {showAll ? "Show paginated" : "Show all"}
+              {showAll ? "Sahifalab ko‘rsatish" : "Barchasini ko‘rsatish"}
             </button>
           </div>
         </div>
@@ -155,8 +155,8 @@ export default function Shorts() {
         {shorts.length === 0 && (
           <div className="bg-white border border-dashed border-gray-300 rounded-2xl p-10 text-center">
             <div className="text-5xl mb-4">🎬</div>
-            <p className="text-lg font-semibold text-gray-700">No shorts found</p>
-            <p className="text-sm text-gray-500 mt-2">Try again in a few minutes.</p>
+            <p className="text-lg font-semibold text-gray-700">Hech narsa topilmadi</p>
+            <p className="text-sm text-gray-500 mt-2">Bir necha daqiqadan so‘ng qayta urinib ko‘ring.</p>
           </div>
         )}
 
@@ -171,7 +171,7 @@ export default function Shorts() {
             return (
               <div
                 key={short.id.videoId}
-                className="relative group cursor-pointer rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all aspect-[9/16] bg-black"
+                className="relative group cursor-pointer rounded-xl overflow-hidden shadow-md transition-all duration-200 hover:shadow-xl hover:scale-[1.02] active:scale-[0.98] aspect-[9/16] bg-black"
                 onClick={() => openShort(short, globalIndex)}
               >
                 <img
@@ -182,7 +182,7 @@ export default function Shorts() {
 
                 <div className="absolute inset-0 bg-opacity-20 group-hover:bg-opacity-40 transition-all flex items-center justify-center">
                   <span className="text-white text-3xl opacity-80 group-hover:scale-110 transition-transform">
-                    Play
+                    Ijro
                   </span>
                 </div>
 
@@ -205,14 +205,14 @@ export default function Shorts() {
                     toggleFavorite({
                       id: short.id.videoId,
                       type: "video",
-                      title: short.snippet?.title || "Untitled short",
+                      title: short.snippet?.title || "Nomsiz qisqa video",
                       subtitle: short.snippet?.channelTitle || "YouTube",
                       thumbnail,
-                      meta: "Shorts",
+                      meta: "Qisqa video",
                       link: `/video/${short.id.videoId}`,
                     });
                   }}
-                  className={`absolute top-3 right-3 px-3 py-1 rounded-full text-xs font-semibold ${
+                  className={`absolute top-3 right-3 px-3 py-1 rounded-full text-xs font-semibold cursor-pointer transition-all duration-200 hover:scale-[1.05] active:scale-[0.98] ${
                     favoriteActive ? "bg-red-600 text-white" : "bg-white/90 text-gray-700"
                   }`}
                 >
@@ -228,19 +228,19 @@ export default function Shorts() {
             <button
               onClick={() => goToPage(currentPage - 1)}
               disabled={currentPage === 1}
-              className="px-4 py-2 rounded-lg bg-blue-600 text-white disabled:bg-gray-400 disabled:cursor-not-allowed"
+              className="px-4 py-2 rounded-lg bg-blue-600 text-white cursor-pointer transition-all duration-200 hover:bg-blue-700 active:scale-[0.98] disabled:bg-gray-400 disabled:cursor-not-allowed"
             >
-              Prev
+              Oldingi
             </button>
             <div className="px-3 py-2 text-sm font-semibold text-gray-700">
-              Page {currentPage} of {totalPages}
+              Sahifa {currentPage} / {totalPages}
             </div>
             <button
               onClick={() => goToPage(currentPage + 1)}
               disabled={currentPage === totalPages}
-              className="px-4 py-2 rounded-lg bg-blue-600 text-white disabled:bg-gray-400 disabled:cursor-not-allowed"
+              className="px-4 py-2 rounded-lg bg-blue-600 text-white cursor-pointer transition-all duration-200 hover:bg-blue-700 active:scale-[0.98] disabled:bg-gray-400 disabled:cursor-not-allowed"
             >
-              Next
+              Keyingi
             </button>
           </div>
         )}
@@ -250,9 +250,9 @@ export default function Shorts() {
             <button
               onClick={loadMore}
               disabled={loadingMore}
-              className="px-6 py-2 rounded-lg border border-gray-300 bg-white hover:bg-gray-100 text-sm font-semibold disabled:opacity-60"
+              className="px-6 py-2 rounded-lg border border-gray-300 bg-white text-sm font-semibold cursor-pointer transition-all duration-200 hover:bg-gray-100 hover:scale-[1.02] active:scale-[0.98] disabled:opacity-60"
             >
-              {loadingMore ? "Loading..." : "Load more"}
+              {loadingMore ? "Yuklanmoqda..." : "Yana yuklash"}
             </button>
           </div>
         )}
@@ -269,7 +269,7 @@ export default function Shorts() {
           >
             <button
               onClick={closeShort}
-              className="absolute top-4 right-4 text-white z-20 text-2xl bg-black/50 w-8 h-8 rounded-full flex items-center justify-center hover:bg-black/80"
+              className="absolute top-4 right-4 text-white z-20 text-2xl bg-black/50 w-8 h-8 rounded-full flex items-center justify-center cursor-pointer transition-all duration-200 hover:bg-black/80 active:scale-[0.98]"
             >
               x
             </button>
@@ -277,16 +277,16 @@ export default function Shorts() {
               <button
                 onClick={goPrev}
                 disabled={selectedIndex <= 0}
-                className="w-10 h-10 rounded-full bg-black/60 text-white flex items-center justify-center disabled:opacity-40 disabled:cursor-not-allowed hover:bg-black/80"
-                aria-label="Previous short"
+                className="w-10 h-10 rounded-full bg-black/60 text-white flex items-center justify-center cursor-pointer transition-all duration-200 hover:bg-black/80 active:scale-[0.98] disabled:opacity-40 disabled:cursor-not-allowed"
+                aria-label="Oldingi short"
               >
                 ↑
               </button>
               <button
                 onClick={goNext}
                 disabled={selectedIndex >= shorts.length - 1}
-                className="w-10 h-10 rounded-full bg-black/60 text-white flex items-center justify-center disabled:opacity-40 disabled:cursor-not-allowed hover:bg-black/80"
-                aria-label="Next short"
+                className="w-10 h-10 rounded-full bg-black/60 text-white flex items-center justify-center cursor-pointer transition-all duration-200 hover:bg-black/80 active:scale-[0.98] disabled:opacity-40 disabled:cursor-not-allowed"
+                aria-label="Keyingi short"
               >
                 ↓
               </button>

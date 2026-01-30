@@ -2,9 +2,9 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const quickLinks = [
-  { path: "/", label: "Asosiy" },
-  { path: "/music", label: "Videolar" },
-  { path: "/shorts", label: "Shorts" },
+  { path: "/", label: "Bosh sahifa" },
+  { path: "/music", label: "Musiqa" },
+  { path: "/shorts", label: "Qisqa videolar" },
   { path: "/pictures", label: "Rasmlar" },
   { path: "/about", label: "Biz haqimizda" },
 ];
@@ -43,7 +43,7 @@ function Footer() {
                 <li key={link.path}>
                   <Link
                     to={link.path}
-                    className="text-gray-400 hover:text-white transition-colors"
+                    className="text-gray-400 hover:text-white transition-colors cursor-pointer"
                   >
                     {link.label}
                   </Link>
@@ -83,7 +83,7 @@ function Footer() {
               />
               <button
                 type="button"
-                className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-lg transition-colors"
+                className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-lg transition-all duration-200 cursor-pointer hover:scale-[1.02] active:scale-[0.98]"
               >
                 Obuna bo‘lish
               </button>

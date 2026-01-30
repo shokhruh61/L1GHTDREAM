@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { fetchMusicVideos, getErrorMessage } from "../../lib/youtube";
 import { usePlayer } from "../../context/PlayerContext";
 
@@ -27,7 +27,7 @@ const YouTubeVideos = ({ channelIds = [], maxResults = 12 }) => {
         const validChannels = channelArray.filter(Boolean);
 
         if (validChannels.length === 0) {
-          setError("No channel IDs provided");
+          setError("Kanal IDlari topilmadi");
           return;
         }
 
@@ -56,7 +56,7 @@ const YouTubeVideos = ({ channelIds = [], maxResults = 12 }) => {
 
         setVideos(allVideos);
       } catch (err) {
-        setError(getErrorMessage(err, "Failed to fetch videos"));
+        setError(getErrorMessage(err, "Videolarni yuklab bo‘lmadi"));
       } finally {
         setLoading(false);
       }
@@ -87,7 +87,7 @@ const YouTubeVideos = ({ channelIds = [], maxResults = 12 }) => {
       });
       setNextPageToken(token);
     } catch (err) {
-      setError(getErrorMessage(err, "Failed to load more videos"));
+      setError(getErrorMessage(err, "Ko‘proq videoni yuklab bo‘lmadi"));
     } finally {
       setLoadingMore(false);
     }
@@ -126,7 +126,7 @@ const YouTubeVideos = ({ channelIds = [], maxResults = 12 }) => {
   if (error) {
     return (
       <div className="flex justify-center items-center min-h-[320px]">
-        <div className="text-lg font-semibold text-red-600">Error: {error}</div>
+        <div className="text-lg font-semibold text-red-600">Xatolik: {error}</div>
       </div>
     );
   }
@@ -135,10 +135,16 @@ const YouTubeVideos = ({ channelIds = [], maxResults = 12 }) => {
     return (
       <div className="bg-gray-50 border border-dashed border-gray-300 rounded-2xl p-10 text-center">
         <div className="text-5xl mb-4">📭</div>
-        <div className="text-lg font-semibold text-gray-700">No videos found</div>
+        <div className="text-lg font-semibold text-gray-700">Hech narsa topilmadi</div>
         <p className="text-sm text-gray-500 mt-2">
-          Try another channel or check back later.
+          Boshqa kanalni sinab ko‘ring yoki keyinroq qayta kiring.
         </p>
+        <Link
+          to="/"
+          className="inline-block mt-5 bg-gray-900 text-white font-semibold px-5 py-2 rounded-lg cursor-pointer transition-all duration-200 hover:bg-black hover:scale-[1.02] active:scale-[0.98]"
+        >
+          Bosh sahifaga qaytish
+        </Link>
       </div>
     );
   }
@@ -147,13 +153,13 @@ const YouTubeVideos = ({ channelIds = [], maxResults = 12 }) => {
     <div className="w-full">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-6">
         <div className="text-sm text-gray-600">
-          Showing {displayedVideos.length} of {videos.length} videos
+          {displayedVideos.length} ta video ko‘rsatilmoqda (jami {videos.length})
         </div>
         <button
           onClick={() => setShowAll((v) => !v)}
-          className="px-4 py-2 rounded-lg border border-gray-300 bg-white hover:bg-gray-100 text-sm font-semibold"
+          className="px-4 py-2 rounded-lg border border-gray-300 bg-white text-sm font-semibold cursor-pointer transition-all duration-200 hover:bg-gray-100 hover:scale-[1.02] active:scale-[0.98]"
         >
-          {showAll ? "Show paginated" : "Show all"}
+          {showAll ? "Sahifalab ko‘rsatish" : "Barchasini ko‘rsatish"}
         </button>
       </div>
 
@@ -169,7 +175,7 @@ const YouTubeVideos = ({ channelIds = [], maxResults = 12 }) => {
           const favoriteItem = {
             id,
             type: "video",
-            title: video?.snippet?.title || "Untitled video",
+            title: video?.snippet?.title || "Nomsiz video",
             subtitle: video?.snippet?.channelTitle || "YouTube",
             thumbnail: t,
             meta: "Video",
@@ -182,7 +188,7 @@ const YouTubeVideos = ({ channelIds = [], maxResults = 12 }) => {
             <button
               key={id}
               type="button"
-              className="text-left bg-white rounded-2xl shadow-sm hover:shadow-lg transition-all overflow-hidden group border border-gray-100"
+              className="text-left bg-white rounded-2xl shadow-sm transition-all duration-200 overflow-hidden group border border-gray-100 cursor-pointer hover:shadow-lg hover:scale-[1.02] active:scale-[0.98]"
               onClick={() => navigate(`/video/${id}`)}
             >
               <div className="relative w-full aspect-video bg-black overflow-hidden">
@@ -209,13 +215,13 @@ const YouTubeVideos = ({ channelIds = [], maxResults = 12 }) => {
                     event.stopPropagation();
                     toggleFavorite(favoriteItem);
                   }}
-                  className={`absolute top-3 right-3 px-3 py-1 rounded-full text-xs font-semibold ${
+                  className={`absolute top-3 right-3 px-3 py-1 rounded-full text-xs font-semibold cursor-pointer transition-all duration-200 hover:scale-[1.05] active:scale-[0.98] ${
                     favoriteActive
                       ? "bg-red-600 text-white"
                       : "bg-white/90 text-gray-700"
                   }`}
                 >
-                  {favoriteActive ? "❤️ Saved" : "🤍 Save"}
+                  {favoriteActive ? "❤️ Sevimlilarda" : "🤍 Sevimlilarga"}
                 </button>
               </div>
 
@@ -245,19 +251,19 @@ const YouTubeVideos = ({ channelIds = [], maxResults = 12 }) => {
           <button
             onClick={() => goToPage(currentPage - 1)}
             disabled={currentPage === 1}
-            className="px-4 py-2 rounded-lg bg-blue-600 text-white disabled:bg-gray-400 disabled:cursor-not-allowed"
+            className="px-4 py-2 rounded-lg bg-blue-600 text-white cursor-pointer transition-all duration-200 hover:bg-blue-700 active:scale-[0.98] disabled:bg-gray-400 disabled:cursor-not-allowed"
           >
-            Prev
+            Oldingi
           </button>
           <div className="px-3 py-2 text-sm font-semibold text-gray-700">
-            Page {currentPage} of {totalPages}
+            Sahifa {currentPage} / {totalPages}
           </div>
           <button
             onClick={() => goToPage(currentPage + 1)}
             disabled={currentPage === totalPages}
-            className="px-4 py-2 rounded-lg bg-blue-600 text-white disabled:bg-gray-400 disabled:cursor-not-allowed"
+            className="px-4 py-2 rounded-lg bg-blue-600 text-white cursor-pointer transition-all duration-200 hover:bg-blue-700 active:scale-[0.98] disabled:bg-gray-400 disabled:cursor-not-allowed"
           >
-            Next
+            Keyingi
           </button>
         </div>
       )}
@@ -267,9 +273,9 @@ const YouTubeVideos = ({ channelIds = [], maxResults = 12 }) => {
           <button
             onClick={loadMore}
             disabled={loadingMore}
-            className="px-6 py-2 rounded-lg border border-gray-300 bg-white hover:bg-gray-100 text-sm font-semibold disabled:opacity-60"
+            className="px-6 py-2 rounded-lg border border-gray-300 bg-white text-sm font-semibold cursor-pointer transition-all duration-200 hover:bg-gray-100 hover:scale-[1.02] active:scale-[0.98] disabled:opacity-60"
           >
-            {loadingMore ? "Loading..." : "Load more"}
+            {loadingMore ? "Yuklanmoqda..." : "Yana yuklash"}
           </button>
         </div>
       )}

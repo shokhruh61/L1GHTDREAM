@@ -89,9 +89,9 @@ export default function Pictures() {
       {/* Header */}
       <div className="bg-gray-100 text-gray-900 py-12 border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4">
-          <h2 className="text-5xl font-bold mb-2">📸 Photo Gallery</h2>
+          <h2 className="text-5xl font-bold mb-2">📸 Foto galereya</h2>
           <p className="text-lg text-gray-700">
-            Browse our beautiful collection of {images.length} high-quality images
+            {images.length} ta yuqori sifatli rasmlarni ko‘rib chiqing
           </p>
         </div>
       </div>
@@ -105,7 +105,7 @@ export default function Pictures() {
             return (
               <div
                 key={image.id}
-                className="group bg-white rounded-xl shadow-md hover:shadow-lg transition-all duration-300 transform hover:scale-105 overflow-hidden animate-fade-in"
+                className="group bg-white rounded-xl shadow-md transition-all duration-200 transform overflow-hidden animate-fade-in hover:shadow-lg hover:scale-[1.02]"
               >
                 {/* Image Container */}
                 <div className="relative w-full h-56 overflow-hidden bg-gray-200">
@@ -116,7 +116,7 @@ export default function Pictures() {
                   <img
                     src={image.url}
                     alt={image.alt}
-                    className={`w-full h-full object-cover group-hover:scale-110 transition-all duration-500 ${
+                    className={`w-full h-full object-cover group-hover:scale-110 transition-all duration-300 ${
                       isLoaded ? "opacity-100" : "opacity-0"
                     }`}
                     title={image.title}
@@ -149,20 +149,20 @@ export default function Pictures() {
                   <div className="flex gap-2 mb-3">
                     <button
                       onClick={() => handleDownload(image.url, image.title)}
-                      className="flex-1 flex items-center justify-center gap-1 bg-blue-600 hover:bg-blue-700 text-white px-3 py-2 rounded-lg transition-all font-semibold text-sm"
-                      title="Download this image"
-                    >
-                      ⬇️
-                    </button>
+                    className="flex-1 flex items-center justify-center gap-1 bg-blue-600 text-white px-3 py-2 rounded-lg transition-all duration-200 font-semibold text-sm cursor-pointer hover:bg-blue-700 hover:scale-[1.02] active:scale-[0.98]"
+                    title="Rasmni yuklab olish"
+                  >
+                    ⬇️
+                  </button>
                     
                     <button
                       onClick={() => handleLike(image.id)}
-                      className={`flex-1 flex items-center justify-center gap-1 px-3 py-2 rounded-lg transition-all font-semibold text-sm ${
+                      className={`flex-1 flex items-center justify-center gap-1 px-3 py-2 rounded-lg transition-all duration-200 font-semibold text-sm cursor-pointer hover:scale-[1.02] active:scale-[0.98] ${
                         likedImages.has(image.id)
                           ? "bg-red-600 hover:bg-red-700 text-white"
                           : "bg-gray-200 hover:bg-gray-300 text-gray-900"
                       }`}
-                      title="Like this image"
+                      title="Yoqtirish"
                     >
                       {likedImages.has(image.id) ? "❤️" : "🤍"}
                       <span>{imageLikes[image.id] || 0}</span>
@@ -184,7 +184,7 @@ export default function Pictures() {
         {images.length === 0 && (
           <div className="text-center py-16">
             <div className="text-6xl mb-4">📭</div>
-            <p className="text-2xl text-gray-600 font-semibold">No images found</p>
+            <p className="text-2xl text-gray-600 font-semibold">Hech narsa topilmadi</p>
           </div>
         )}
 
@@ -193,9 +193,9 @@ export default function Pictures() {
           <button
             onClick={() => goToPage(currentPage - 1)}
             disabled={currentPage === 1}
-            className="px-4 py-2 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white rounded-lg disabled:cursor-not-allowed transition-all font-semibold"
+            className="px-4 py-2 bg-blue-600 text-white rounded-lg disabled:cursor-not-allowed transition-all duration-200 font-semibold cursor-pointer hover:bg-blue-700 hover:scale-[1.02] active:scale-[0.98] disabled:bg-gray-400"
           >
-            ← Previous
+            ← Oldingi
           </button>
 
           <div className="flex gap-1 flex-wrap justify-center">
@@ -203,7 +203,7 @@ export default function Pictures() {
               <button
                 key={page}
                 onClick={() => goToPage(page)}
-                className={`px-3 py-2 rounded-lg transition-all font-semibold ${
+                className={`px-3 py-2 rounded-lg transition-all duration-200 font-semibold cursor-pointer hover:scale-[1.02] active:scale-[0.98] ${
                   currentPage === page
                     ? "bg-blue-600 text-white shadow-md"
                     : "bg-white text-gray-900 border-2 border-gray-300 hover:border-blue-500 hover:text-blue-600"
@@ -217,15 +217,15 @@ export default function Pictures() {
           <button
             onClick={() => goToPage(currentPage + 1)}
             disabled={currentPage === totalPages}
-            className="px-4 py-2 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white rounded-lg disabled:cursor-not-allowed transition-all font-semibold"
+            className="px-4 py-2 bg-blue-600 text-white rounded-lg disabled:cursor-not-allowed transition-all duration-200 font-semibold cursor-pointer hover:bg-blue-700 hover:scale-[1.02] active:scale-[0.98] disabled:bg-gray-400"
           >
-            Next →
+            Keyingi →
           </button>
         </div>
 
         {/* Stats */}
         <p className="text-center text-gray-600 mt-6 font-semibold">
-          Showing {startIndex + 1} - {Math.min(startIndex + IMAGES_PER_PAGE, images.length)} of {images.length} images
+          {startIndex + 1} - {Math.min(startIndex + IMAGES_PER_PAGE, images.length)} / {images.length} ta rasm
         </p>
       </div>
 

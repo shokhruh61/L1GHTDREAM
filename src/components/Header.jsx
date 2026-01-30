@@ -9,9 +9,9 @@ function Header() {
   const location = useLocation();
 
   const navItems = [
-    { path: "/", label: "Asosiy" },
-    { path: "/music", label: "Videolar" },
-    { path: "/shorts", label: "Shorts" },
+    { path: "/", label: "Bosh sahifa" },
+    { path: "/music", label: "Musiqa" },
+    { path: "/shorts", label: "Videolar" },
     { path: "/pictures", label: "Rasmlar" },
     { path: "/about", label: "Biz haqimizda" },
   ];

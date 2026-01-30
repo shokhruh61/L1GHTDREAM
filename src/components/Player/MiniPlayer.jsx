@@ -49,17 +49,25 @@ function MiniPlayer() {
             </div>
 
             <div className="flex items-center gap-4">
-              <button onClick={prevTrack} className="text-xl" aria-label="Previous track">
+              <button
+                onClick={prevTrack}
+                className="text-xl cursor-pointer transition-all duration-200 hover:scale-110 active:scale-[0.98]"
+                aria-label="Oldingi trek"
+              >
                 ⏮️
               </button>
               <button
                 onClick={togglePlay}
-                className="bg-blue-600 text-white rounded-full w-12 h-12 flex items-center justify-center shadow"
-                aria-label="Play or pause"
+                className="bg-blue-600 text-white rounded-full w-12 h-12 flex items-center justify-center shadow cursor-pointer transition-all duration-200 hover:bg-blue-700 hover:scale-110 active:scale-[0.98]"
+                aria-label="Ijro yoki pauza"
               >
                 {isPlaying ? "⏸️" : "▶️"}
               </button>
-              <button onClick={nextTrack} className="text-xl" aria-label="Next track">
+              <button
+                onClick={nextTrack}
+                className="text-xl cursor-pointer transition-all duration-200 hover:scale-110 active:scale-[0.98]"
+                aria-label="Keyingi trek"
+              >
                 ⏭️
               </button>
             </div>
@@ -73,16 +81,16 @@ function MiniPlayer() {
                     title: currentTrack.title,
                     subtitle: currentTrack.artist,
                     thumbnail: currentTrack.thumbnail,
-                    meta: "Audio",
+                    meta: "Musiqa",
                   })
                 }
-                className={`px-3 py-2 rounded-full border text-sm font-semibold ${
+                className={`px-3 py-2 rounded-full border text-sm font-semibold cursor-pointer transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] ${
                   favoriteActive
                     ? "border-red-500 text-red-600 bg-red-50"
                     : "border-gray-300 text-gray-600"
                 }`}
               >
-                {favoriteActive ? "❤️ Favorited" : "🤍 Favorite"}
+                {favoriteActive ? "❤️ Sevimlida" : "🤍 Sevimlilarga qo‘shish"}
               </button>
               <div className="flex items-center gap-2">
                 <span className="text-sm">🔊</span>
@@ -93,7 +101,7 @@ function MiniPlayer() {
                   step="0.01"
                   value={volume}
                   onChange={(event) => setVolume(parseFloat(event.target.value))}
-                  className="w-24"
+                  className="w-24 cursor-pointer"
                 />
               </div>
             </div>
@@ -107,7 +115,7 @@ function MiniPlayer() {
               max={duration || 0}
               value={currentTime}
               onChange={(event) => seekTo(parseFloat(event.target.value))}
-              className="flex-1"
+              className="flex-1 cursor-pointer"
             />
             <span>{formatTime(duration)}</span>
           </div>
