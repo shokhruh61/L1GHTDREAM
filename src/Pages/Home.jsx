@@ -24,7 +24,7 @@ function Home() {
                 Explore Music
               </Link>
               <Link 
-                to="/picturess"
+                to="/pictures"
                 className="bg-gray-200 hover:bg-gray-300 text-gray-900 font-bold py-3 px-8 rounded-lg transition-all transform hover:scale-105 text-center"
               >
                 View Gallery

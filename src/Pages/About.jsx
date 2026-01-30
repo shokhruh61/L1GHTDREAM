@@ -130,7 +130,7 @@ function About() {
               Explore Music
             </Link>
             <Link 
-              to="/picturess"
+              to="/pictures"
               className="bg-gray-300 hover:bg-gray-400 text-gray-900 font-bold py-3 px-8 rounded-lg transition-all transform hover:scale-105"
             >
               View Photos
