@@ -1,8 +1,23 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
-import M1norfm from "../assets/images/m1norfm.jpg"; // nomi/pathini o'zingdagi joyiga mosla
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import M1norfm from "../assets/images/m1norfm.jpg";
+import { CONTINUE_LISTENING_KEY, usePlayer } from "../context/PlayerContext";
 
 function Home() {
+  const { resumeFromContinue } = usePlayer();
+  const [continuePayload, setContinuePayload] = useState(null);
+
+  useEffect(() => {
+    const saved = localStorage.getItem(CONTINUE_LISTENING_KEY);
+    if (saved) {
+      try {
+        setContinuePayload(JSON.parse(saved));
+      } catch (error) {
+        console.error("Failed to parse continue listening payload", error);
+      }
+    }
+  }, []);
+
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Section */}
@@ -17,14 +32,14 @@ function Home() {
               Your ultimate destination for music, videos, and amazing content. Discover the latest hits and classic favorites all in one place.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
-              <Link 
+              <Link
                 to="/music"
                 className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-lg transition-all transform hover:scale-105 text-center"
               >
                 Explore Music
               </Link>
-              <Link 
-                to="/picturess"
+              <Link
+                to="/pictures"
                 className="bg-gray-200 hover:bg-gray-300 text-gray-900 font-bold py-3 px-8 rounded-lg transition-all transform hover:scale-105 text-center"
               >
                 View Gallery
@@ -44,6 +59,39 @@ function Home() {
           </div>
         </div>
       </div>
+
+      {continuePayload && (
+        <div className="bg-gradient-to-r from-blue-50 via-white to-blue-50 text-gray-900 py-12">
+          <div className="container mx-auto px-4">
+            <div className="flex flex-col lg:flex-row items-center gap-8 bg-white shadow-lg rounded-2xl p-8 border border-gray-100">
+              <img
+                src={continuePayload.thumbnail}
+                alt={continuePayload.title}
+                className="w-28 h-28 rounded-2xl object-cover border border-gray-200"
+              />
+              <div className="flex-1 text-center lg:text-left">
+                <p className="text-sm uppercase tracking-wide text-blue-600 font-semibold">
+                  Continue Listening
+                </p>
+                <h3 className="text-2xl font-bold text-gray-900 mt-1">
+                  {continuePayload.title}
+                </h3>
+                <p className="text-gray-600">{continuePayload.artist}</p>
+                <p className="text-xs text-gray-500 mt-2">
+                  Last listened at {Math.floor(continuePayload.currentTime)}s of{" "}
+                  {Math.floor(continuePayload.duration)}s
+                </p>
+              </div>
+              <button
+                onClick={() => resumeFromContinue(continuePayload)}
+                className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-3 rounded-lg"
+              >
+                Resume
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Features Section */}
       <div className="bg-gray-50 text-gray-900 py-16">
@@ -107,7 +155,7 @@ function Home() {
           <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
             Join thousands of music lovers and content enthusiasts. Start discovering amazing content today!
           </p>
-          <Link 
+          <Link
             to="/music"
             className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-12 rounded-lg text-lg transition-all transform hover:scale-105"
           >

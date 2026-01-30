@@ -12,6 +12,8 @@ function Header() {
     { path: "/", label: "Asosiy" },
     { path: "/music", label: "Videolar" },
     { path: "/shorts", label: "Shorts" },
+    { path: "/pictures", label: "Rasmlar" },
+    { path: "/about", label: "Biz haqimizda" },
   ];
 
   const isActive = (path) => location.pathname === path;

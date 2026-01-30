@@ -1,6 +1,7 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { fetchVideoDetails, getErrorMessage } from "../lib/youtube";
+import { usePlayer } from "../context/PlayerContext";
 
 const VideoPlayer = () => {
   const { videoId } = useParams();
@@ -8,6 +9,7 @@ const VideoPlayer = () => {
   const [video, setVideo] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const { toggleFavorite, isFavorite } = usePlayer();
 
   useEffect(() => {
     const loadVideoDetails = async () => {
@@ -32,8 +34,28 @@ const VideoPlayer = () => {
 
   if (loading) {
     return (
-      <div className="flex justify-center items-center min-h-screen">
-        <div className="text-lg font-semibold text-gray-600">Loading video...</div>
+      <div className="min-h-screen bg-white">
+        <div className="max-w-6xl mx-auto px-4 py-6 animate-pulse">
+          <div className="h-6 w-40 bg-gray-200 rounded mb-6" />
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div className="lg:col-span-2">
+              <div className="w-full aspect-video bg-gray-200 rounded-lg mb-6" />
+              <div className="bg-gray-50 rounded-lg p-6 space-y-4">
+                <div className="h-6 bg-gray-200 rounded w-3/4" />
+                <div className="h-4 bg-gray-200 rounded w-1/2" />
+                <div className="h-4 bg-gray-100 rounded w-full" />
+              </div>
+            </div>
+            <div className="lg:col-span-1">
+              <div className="bg-gray-50 rounded-lg p-6 space-y-4">
+                <div className="h-5 bg-gray-200 rounded w-1/2" />
+                <div className="h-3 bg-gray-200 rounded w-full" />
+                <div className="h-3 bg-gray-200 rounded w-3/4" />
+                <div className="h-9 bg-gray-200 rounded w-full" />
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     );
   }
@@ -72,6 +94,12 @@ const VideoPlayer = () => {
 
   const snippet = video.snippet;
   const stats = video.statistics;
+  const thumbnail =
+    snippet?.thumbnails?.maxres?.url ||
+    snippet?.thumbnails?.high?.url ||
+    snippet?.thumbnails?.medium?.url ||
+    snippet?.thumbnails?.default?.url;
+  const favoriteActive = isFavorite(videoId, "video");
 
   return (
     <div className="bg-white min-h-screen text-gray-900">
@@ -118,7 +146,7 @@ const VideoPlayer = () => {
                 </div>
 
                 {/* Stats */}
-                <div className="flex gap-6">
+                <div className="flex gap-6 items-center">
                   <div className="text-center">
                     <p className="text-lg font-semibold">
                       {parseInt(stats.viewCount || 0).toLocaleString()}
@@ -131,6 +159,26 @@ const VideoPlayer = () => {
                     </p>
                     <p className="text-gray-600 text-sm">Likes</p>
                   </div>
+                  <button
+                    onClick={() =>
+                      toggleFavorite({
+                        id: videoId,
+                        type: "video",
+                        title: snippet.title,
+                        subtitle: snippet.channelTitle,
+                        thumbnail,
+                        meta: "Video",
+                        link: `/video/${videoId}`,
+                      })
+                    }
+                    className={`px-4 py-2 rounded-full text-sm font-semibold border ${
+                      favoriteActive
+                        ? "border-red-500 text-red-600 bg-red-50"
+                        : "border-gray-300 text-gray-600 bg-white"
+                    }`}
+                  >
+                    {favoriteActive ? "❤️ Favorited" : "🤍 Add to favorites"}
+                  </button>
                 </div>
               </div>
 

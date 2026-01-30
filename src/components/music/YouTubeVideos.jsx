@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { fetchMusicVideos, getErrorMessage } from "../../lib/youtube";
+import { usePlayer } from "../../context/PlayerContext";
 
 const YouTubeVideos = ({ channelIds = [], maxResults = 12 }) => {
   const [videos, setVideos] = useState([]);
@@ -11,6 +12,7 @@ const YouTubeVideos = ({ channelIds = [], maxResults = 12 }) => {
   const [nextPageToken, setNextPageToken] = useState(null);
   const [loadingMore, setLoadingMore] = useState(false);
   const navigate = useNavigate();
+  const { toggleFavorite, isFavorite } = usePlayer();
   const pageSize = maxResults;
 
   useEffect(() => {
@@ -103,8 +105,20 @@ const YouTubeVideos = ({ channelIds = [], maxResults = 12 }) => {
 
   if (loading) {
     return (
-      <div className="flex justify-center items-center min-h-[320px]">
-        <div className="text-lg font-semibold text-gray-600">Loading videos...</div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        {Array.from({ length: 8 }).map((_, index) => (
+          <div
+            key={`skeleton-${index}`}
+            className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden animate-pulse"
+          >
+            <div className="w-full aspect-video bg-gray-200" />
+            <div className="p-4 space-y-3">
+              <div className="h-4 bg-gray-200 rounded" />
+              <div className="h-4 bg-gray-100 rounded w-3/4" />
+              <div className="h-3 bg-gray-100 rounded w-1/2" />
+            </div>
+          </div>
+        ))}
       </div>
     );
   }
@@ -119,8 +133,12 @@ const YouTubeVideos = ({ channelIds = [], maxResults = 12 }) => {
 
   if (videos.length === 0) {
     return (
-      <div className="flex justify-center items-center min-h-[320px]">
-        <div className="text-lg font-semibold text-gray-600">No videos found</div>
+      <div className="bg-gray-50 border border-dashed border-gray-300 rounded-2xl p-10 text-center">
+        <div className="text-5xl mb-4">📭</div>
+        <div className="text-lg font-semibold text-gray-700">No videos found</div>
+        <p className="text-sm text-gray-500 mt-2">
+          Try another channel or check back later.
+        </p>
       </div>
     );
   }
@@ -148,6 +166,18 @@ const YouTubeVideos = ({ channelIds = [], maxResults = 12 }) => {
             video?.snippet?.thumbnails?.medium?.url ||
             video?.snippet?.thumbnails?.default?.url;
 
+          const favoriteItem = {
+            id,
+            type: "video",
+            title: video?.snippet?.title || "Untitled video",
+            subtitle: video?.snippet?.channelTitle || "YouTube",
+            thumbnail: t,
+            meta: "Video",
+            link: `/video/${id}`,
+          };
+
+          const favoriteActive = isFavorite(id, "video");
+
           return (
             <button
               key={id}
@@ -172,6 +202,21 @@ const YouTubeVideos = ({ channelIds = [], maxResults = 12 }) => {
                     <span className="text-2xl">▶</span>
                   </div>
                 </div>
+
+                <button
+                  type="button"
+                  onClick={(event) => {
+                    event.stopPropagation();
+                    toggleFavorite(favoriteItem);
+                  }}
+                  className={`absolute top-3 right-3 px-3 py-1 rounded-full text-xs font-semibold ${
+                    favoriteActive
+                      ? "bg-red-600 text-white"
+                      : "bg-white/90 text-gray-700"
+                  }`}
+                >
+                  {favoriteActive ? "❤️ Saved" : "🤍 Save"}
+                </button>
               </div>
 
               <div className="p-4">

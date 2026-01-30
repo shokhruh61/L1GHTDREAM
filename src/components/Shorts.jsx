@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { fetchShortVideos, getErrorMessage } from "../lib/youtube";
+import { usePlayer } from "../context/PlayerContext";
 
 export default function Shorts() {
   const [shorts, setShorts] = useState([]);
@@ -11,6 +12,7 @@ export default function Shorts() {
   const [showAll, setShowAll] = useState(false);
   const [nextPageToken, setNextPageToken] = useState(null);
   const [loadingMore, setLoadingMore] = useState(false);
+  const { toggleFavorite, isFavorite } = usePlayer();
 
   const channelId = "UCcSWtzdfWI77YBl7vTV83OA";
   const pageSize = 12;
@@ -109,9 +111,17 @@ export default function Shorts() {
 
   if (loading) {
     return (
-      <section className="min-h-screen bg-white flex items-center justify-center">
-        <div className="text-lg font-semibold text-gray-600">
-          Loading shorts...
+      <section className="min-h-screen bg-white py-12 px-4">
+        <div className="max-w-7xl mx-auto">
+          <div className="h-8 w-32 bg-gray-200 rounded mb-8 animate-pulse" />
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            {Array.from({ length: 8 }).map((_, index) => (
+              <div
+                key={`short-skeleton-${index}`}
+                className="aspect-[9/16] bg-gray-200 rounded-xl animate-pulse"
+              />
+            ))}
+          </div>
         </div>
       </section>
     );
@@ -143,12 +153,21 @@ export default function Shorts() {
         </div>
 
         {shorts.length === 0 && (
-          <div className="text-center text-gray-600 py-16">No shorts found</div>
+          <div className="bg-white border border-dashed border-gray-300 rounded-2xl p-10 text-center">
+            <div className="text-5xl mb-4">🎬</div>
+            <p className="text-lg font-semibold text-gray-700">No shorts found</p>
+            <p className="text-sm text-gray-500 mt-2">Try again in a few minutes.</p>
+          </div>
         )}
 
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {displayedShorts.map((short, index) => {
             const globalIndex = showAll ? index : startIndex + index;
+            const thumbnail =
+              short.snippet?.thumbnails?.high?.url ||
+              short.snippet?.thumbnails?.medium?.url ||
+              short.snippet?.thumbnails?.default?.url;
+            const favoriteActive = isFavorite(short.id.videoId, "video");
             return (
               <div
                 key={short.id.videoId}
@@ -156,11 +175,7 @@ export default function Shorts() {
                 onClick={() => openShort(short, globalIndex)}
               >
                 <img
-                  src={
-                    short.snippet?.thumbnails?.high?.url ||
-                    short.snippet?.thumbnails?.medium?.url ||
-                    short.snippet?.thumbnails?.default?.url
-                  }
+                  src={thumbnail}
                   alt={short.snippet?.title || "Short"}
                   className="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity"
                 />
@@ -182,6 +197,27 @@ export default function Shorts() {
                     )}
                   </p>
                 </div>
+
+                <button
+                  type="button"
+                  onClick={(event) => {
+                    event.stopPropagation();
+                    toggleFavorite({
+                      id: short.id.videoId,
+                      type: "video",
+                      title: short.snippet?.title || "Untitled short",
+                      subtitle: short.snippet?.channelTitle || "YouTube",
+                      thumbnail,
+                      meta: "Shorts",
+                      link: `/video/${short.id.videoId}`,
+                    });
+                  }}
+                  className={`absolute top-3 right-3 px-3 py-1 rounded-full text-xs font-semibold ${
+                    favoriteActive ? "bg-red-600 text-white" : "bg-white/90 text-gray-700"
+                  }`}
+                >
+                  {favoriteActive ? "❤️" : "🤍"}
+                </button>
               </div>
             );
           })}

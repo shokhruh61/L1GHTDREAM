@@ -6,58 +6,22 @@ import Pictures from "./components/Pictures";
 import Music from "./Pages/Music";
 import VideoPlayer from "./Pages/VideoPlayer";
 import Shorts from "./Pages/Shorts";
+import Favorites from "./Pages/Favorites";
+import Search from "./Pages/Search";
 
 function App() {
   return (
     <Routes>
-      <Route
-        path="/"
-        element={
-          <MainLayout>
-            <Home />
-          </MainLayout>
-        }
-      />
-      <Route
-        path="/about"
-        element={
-          <MainLayout>
-            <About />
-          </MainLayout>
-        }
-      />
-      <Route
-        path="/music"
-        element={
-          <MainLayout>
-            <Music />
-          </MainLayout>
-        }
-      />
-      <Route
-        path="/pictures"
-        element={
-          <MainLayout>
-            <Pictures />
-          </MainLayout>
-        }
-      />
-      <Route
-        path="/video/:videoId"
-        element={
-          <MainLayout>
-            <VideoPlayer />
-          </MainLayout>
-        }
-      />
-      <Route
-        path="/shorts"
-        element={
-          <MainLayout>
-            <Shorts />
-          </MainLayout>
-        }
-      />      
+      <Route element={<MainLayout />}>
+        <Route path="/" element={<Home />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/music" element={<Music />} />
+        <Route path="/pictures" element={<Pictures />} />
+        <Route path="/video/:videoId" element={<VideoPlayer />} />
+        <Route path="/shorts" element={<Shorts />} />
+        <Route path="/favorites" element={<Favorites />} />
+        <Route path="/search" element={<Search />} />
+      </Route>
     </Routes>
   );
 }
