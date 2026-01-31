@@ -3,7 +3,6 @@
     {
       "id": 1,
       "title": "Elephants",
-      "description": "Chiroyli va ajoyib rasm",
       "url": "/images/gallery/elephants.jpg",
       "alt": "Elephants photo",
       "uploadDate": "2026-01-26"
@@ -11,7 +10,6 @@
     {
       "id": 2,
       "title": "Lightdream 01",
-      "description": "Ajoyib l1ghtdream rasmi",
       "url": "/images/lightdream/lightdream-01.jpg",
       "alt": "Lightdream 01 photo",
       "uploadDate": "2026-01-26"
@@ -19,7 +17,6 @@
     {
       "id": 3,
       "title": "Lightdream 02",
-      "description": "Chiroyli fotosurat",
       "url": "/images/lightdream/lightdream-02.jpg",
       "alt": "Lightdream 02 photo",
       "uploadDate": "2026-01-26"
@@ -27,7 +24,6 @@
     {
       "id": 4,
       "title": "Lightdream 03",
-      "description": "Ajoyib fotosurat",
       "url": "/images/lightdream/lightdream-03.jpg",
       "alt": "Lightdream 03 photo",
       "uploadDate": "2026-01-26"
@@ -35,7 +31,6 @@
     {
       "id": 5,
       "title": "Lightdream 04",
-      "description": "Chiroyli tasvirlar",
       "url": "/images/lightdream/lightdream-04.jpg",
       "alt": "Lightdream 04 photo",
       "uploadDate": "2026-01-26"
@@ -43,7 +38,6 @@
     {
       "id": 6,
       "title": "Lightdream 05",
-      "description": "Sifatli tasvirlar",
       "url": "/images/lightdream/lightdream-05.jpg",
       "alt": "Lightdream 05 photo",
       "uploadDate": "2026-01-26"
@@ -51,7 +45,6 @@
     {
       "id": 7,
       "title": "Lightdream 06",
-      "description": "Yangi dizayn",
       "url": "/images/lightdream/lightdream-06.jpg",
       "alt": "Lightdream 06 photo",
       "uploadDate": "2026-01-26"
@@ -59,7 +52,6 @@
     {
       "id": 8,
       "title": "Lightdream 07",
-      "description": "Professional fotosurat",
       "url": "/images/lightdream/lightdream-07.jpg",
       "alt": "Lightdream 07 photo",
       "uploadDate": "2026-01-26"
@@ -67,7 +59,6 @@
     {
       "id": 9,
       "title": "Lightdream 08",
-      "description": "High quality image",
       "url": "/images/lightdream/lightdream-08.jpg",
       "alt": "Lightdream 08 photo",
       "uploadDate": "2026-01-26"
@@ -75,7 +66,6 @@
     {
       "id": 10,
       "title": "Lightdream 09",
-      "description": "Amazing visuals",
       "url": "/images/lightdream/lightdream-09.jpg",
       "alt": "Lightdream 09 photo",
       "uploadDate": "2026-01-26"
@@ -83,7 +73,6 @@
     {
       "id": 11,
       "title": "Lightdream 10",
-      "description": "Beautiful composition",
       "url": "/images/lightdream/lightdream-10.jpg",
       "alt": "Lightdream 10 photo",
       "uploadDate": "2026-01-26"
@@ -91,7 +80,6 @@
     {
       "id": 12,
       "title": "Lightdream 11",
-      "description": "Creative artwork",
       "url": "/images/lightdream/lightdream-11.jpg",
       "alt": "Lightdream 11 photo",
       "uploadDate": "2026-01-26"
@@ -99,7 +87,6 @@
     {
       "id": 13,
       "title": "Lightdream 12",
-      "description": "Professional design",
       "url": "/images/lightdream/lightdream-12.jpg",
       "alt": "Lightdream 12 photo",
       "uploadDate": "2026-01-26"
@@ -107,7 +94,6 @@
     {
       "id": 14,
       "title": "Lightdream 13",
-      "description": "Outstanding quality",
       "url": "/images/lightdream/lightdream-13.jpg",
       "alt": "Lightdream 13 photo",
       "uploadDate": "2026-01-26"
@@ -115,7 +101,6 @@
     {
       "id": 15,
       "title": "Lightdream 14",
-      "description": "Modern style",
       "url": "/images/lightdream/lightdream-14.jpg",
       "alt": "Lightdream 14 photo",
       "uploadDate": "2026-01-26"
@@ -123,7 +108,6 @@
     {
       "id": 16,
       "title": "Lightdream 15",
-      "description": "Stunning visuals",
       "url": "/images/lightdream/lightdream-15.jpg",
       "alt": "Lightdream 15 photo",
       "uploadDate": "2026-01-26"
@@ -131,7 +115,6 @@
     {
       "id": 17,
       "title": "Lightdream 16",
-      "description": "Excellent photography",
       "url": "/images/lightdream/lightdream-16.jpg",
       "alt": "Lightdream 16 photo",
       "uploadDate": "2026-01-26"
@@ -139,7 +122,6 @@
     {
       "id": 18,
       "title": "M1Nor Profile",
-      "description": "M1nor brand image",
       "url": "/images/brand/m1nor-profile.jpg",
       "alt": "M1Nor Profile photo",
       "uploadDate": "2026-01-26"
@@ -147,7 +129,6 @@
     {
       "id": 19,
       "title": "M1Norfm Hero",
-      "description": "M1norfm collection",
       "url": "/images/brand/m1norfm-hero.jpg",
       "alt": "M1Norfm Hero photo",
       "uploadDate": "2026-01-26"
@@ -155,7 +136,6 @@
     {
       "id": 20,
       "title": "M1Nor Wordmark",
-      "description": "Minor collection",
       "url": "/images/brand/m1nor-wordmark.jpg",
       "alt": "M1Nor Wordmark photo",
       "uploadDate": "2026-01-26"
@@ -163,7 +143,6 @@
     {
       "id": 21,
       "title": "M1Nor Wordmark Alt",
-      "description": "Minor style",
       "url": "/images/brand/m1nor-wordmark-alt.jpg",
       "alt": "M1Nor Wordmark Alt photo",
       "uploadDate": "2026-01-26"
@@ -171,7 +150,6 @@
     {
       "id": 22,
       "title": "M1Nor Lightdream 01",
-      "description": "Premium collection",
       "url": "/images/m1nor-lightdream/m1nor-lightdream-01.jpg",
       "alt": "M1Nor Lightdream 01 photo",
       "uploadDate": "2026-01-26"
@@ -179,7 +157,6 @@
     {
       "id": 23,
       "title": "M1Nor Lightdream 02",
-      "description": "Exclusive designs",
       "url": "/images/m1nor-lightdream/m1nor-lightdream-02.jpg",
       "alt": "M1Nor Lightdream 02 photo",
       "uploadDate": "2026-01-26"
@@ -187,7 +164,6 @@
     {
       "id": 24,
       "title": "M1Nor Lightdream 03",
-      "description": "Limited edition",
       "url": "/images/m1nor-lightdream/m1nor-lightdream-03.jpg",
       "alt": "M1Nor Lightdream 03 photo",
       "uploadDate": "2026-01-26"
@@ -195,7 +171,6 @@
     {
       "id": 25,
       "title": "M1Nor Lightdream 04",
-      "description": "Special collection",
       "url": "/images/m1nor-lightdream/m1nor-lightdream-04.jpg",
       "alt": "M1Nor Lightdream 04 photo",
       "uploadDate": "2026-01-26"
@@ -203,7 +178,6 @@
     {
       "id": 26,
       "title": "M1Nor Lightdream 05",
-      "description": "Premium quality",
       "url": "/images/m1nor-lightdream/m1nor-lightdream-05.jpg",
       "alt": "M1Nor Lightdream 05 photo",
       "uploadDate": "2026-01-26"
@@ -211,7 +185,6 @@
     {
       "id": 27,
       "title": "M1Nor Lightdream 06",
-      "description": "Unique designs",
       "url": "/images/m1nor-lightdream/m1nor-lightdream-06.jpg",
       "alt": "M1Nor Lightdream 06 photo",
       "uploadDate": "2026-01-26"
@@ -219,7 +192,6 @@
     {
       "id": 28,
       "title": "M1Nor Lightdream 07",
-      "description": "Exclusive collection",
       "url": "/images/m1nor-lightdream/m1nor-lightdream-07.jpg",
       "alt": "M1Nor Lightdream 07 photo",
       "uploadDate": "2026-01-26"
@@ -227,7 +199,6 @@
     {
       "id": 29,
       "title": "M1Nor Symbol",
-      "description": "Special edition",
       "url": "/images/brand/m1nor-symbol.jpg",
       "alt": "M1Nor Symbol photo",
       "uploadDate": "2026-01-26"

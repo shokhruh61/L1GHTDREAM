@@ -7,6 +7,7 @@ export default function Pictures() {
   const images = mediaData.images;
   const [currentPage, setCurrentPage] = useState(1);
   const [loadedImages, setLoadedImages] = useState(new Set());
+  const [selectedImage, setSelectedImage] = useState(null);
   const [likedImages, setLikedImages] = useState(() => {
     const saved = localStorage.getItem("likedImages");
     return saved ? new Set(JSON.parse(saved)) : new Set();
@@ -82,6 +83,16 @@ export default function Pictures() {
     }
   };
 
+  const openImage = (image) => {
+    setSelectedImage(image);
+    document.body.style.overflow = "hidden";
+  };
+
+  const closeImage = () => {
+    setSelectedImage(null);
+    document.body.style.overflow = "";
+  };
+
   const goToPage = (page) => {
     setCurrentPage(Math.max(1, Math.min(page, totalPages)));
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -94,7 +105,7 @@ export default function Pictures() {
         <div className="max-w-7xl mx-auto px-4">
           <h2 className="text-5xl font-bold mb-2">📸 Foto galereya</h2>
           <p className="text-lg text-gray-700">
-            {images.length} ta yuqori sifatli rasmlarni ko‘rib chiqing
+            {images.length} ta rasmlarni ko‘rib chiqing
           </p>
         </div>
       </div>
@@ -116,26 +127,26 @@ export default function Pictures() {
                     <div className="absolute inset-0 from-gray-300 via-gray-200 to-gray-300 animate-pulse"></div>
                   )}
 
-                  <img
-                    src={image.url}
-                    alt={image.alt}
-                    className={`w-full h-full object-cover group-hover:scale-110 transition-all duration-300 ${
-                      isLoaded ? "opacity-100" : "opacity-0"
-                    }`}
-                    title={image.title}
-                    onLoad={() => handleImageLoad(image.id)}
-                    onError={(e) => {
-                      handleImageLoad(image.id);
-                      e.target.style.display = "none";
-                    }}
-                  />
-
-                  {/* Hover Overlay */}
-                  <div className="absolute inset-0 bg-opacity-0 group-hover:bg-opacity-20 transition-all duration-300 flex items-center justify-center">
-                    <div className="text-white text-4xl opacity-0 group-hover:opacity-100 transition-opacity">
-                      👁️
-                    </div>
-                  </div>
+                  <button
+                    type="button"
+                    onClick={() => openImage(image)}
+                    className="absolute inset-0 w-full h-full"
+                    aria-label={`${image.title} rasmini kattalashtirib ko'rish`}
+                  >
+                    <img
+                      src={image.url}
+                      alt={image.alt}
+                      className={`w-full h-full object-cover group-hover:scale-110 transition-all duration-300 ${
+                        isLoaded ? "opacity-100" : "opacity-0"
+                      }`}
+                      title={image.title}
+                      onLoad={() => handleImageLoad(image.id)}
+                      onError={(e) => {
+                        handleImageLoad(image.id);
+                        e.target.style.display = "none";
+                      }}
+                    />
+                  </button>
                 </div>
 
                 {/* Info Section */}
@@ -253,6 +264,46 @@ export default function Pictures() {
           animation: fadeIn 0.6s ease-out;
         }
       `}</style>
+
+      {selectedImage && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 px-4"
+          onClick={closeImage}
+          onKeyDown={(e) => {
+            if (e.key === "Escape") {
+              closeImage();
+            }
+          }}
+          role="dialog"
+          aria-modal="true"
+          tabIndex={-1}
+        >
+          <div
+            className="relative max-w-4xl w-full"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              type="button"
+              onClick={closeImage}
+              className="absolute -top-10 right-0 text-white text-2xl"
+              aria-label="Yopish"
+            >
+              ✕
+            </button>
+            <img
+              src={selectedImage.url}
+              alt={selectedImage.alt}
+              className="w-full max-h-[80vh] object-contain rounded-lg bg-black"
+            />
+            <div className="mt-3 text-center text-white">
+              <div className="font-semibold">{selectedImage.title}</div>
+              <div className="text-sm text-gray-200">
+                {selectedImage.description}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 }
