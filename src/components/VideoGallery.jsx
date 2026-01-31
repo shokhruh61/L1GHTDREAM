@@ -8,26 +8,26 @@ export default function VideoGallery() {
   return (
     <section className="py-12 px-4">
       <div className="max-w-6xl mx-auto">
-        <h2 className="text-4xl font-bold mb-12 text-center">M1NORFM Video</h2>
+        <h2 className="text-4xl font-bold mb-12 text-center">M1NOR FM videolari</h2>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {videos.map((video) => (
             <div
               key={video.id}
-              className="overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-shadow"
+              className="overflow-hidden rounded-xl shadow-lg transition-all duration-200 hover:shadow-xl hover:scale-[1.02]"
             >
               <div className="block w-full h-48 relative group cursor-pointer overflow-hidden">
                 <video 
                   src={video.url} 
                   alt={video.title}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                 />
                 <div 
                   onClick={() => setSelectedVideo(video)}
-                  className="absolute inset-0 bg-opacity-40 group-hover:bg-opacity-60 transition-all flex items-center justify-center"
+                  className="absolute inset-0 bg-opacity-40 group-hover:bg-opacity-60 transition-all duration-200 flex items-center justify-center cursor-pointer"
                 >
                   <button
-                    className="text-white text-4xl hover:scale-110 transition-transform"
+                    className="text-white text-4xl cursor-pointer transition-all duration-200 hover:scale-110 active:scale-[0.98]"
                   >
                     ▶
                   </button>
@@ -64,7 +64,7 @@ export default function VideoGallery() {
           >
             <button
               onClick={() => setSelectedVideo(null)}
-              className="absolute -top-10 right-0 text-white text-2xl font-bold hover:text-gray-300"
+              className="absolute -top-10 right-0 text-white text-2xl font-bold cursor-pointer transition-all duration-200 hover:text-gray-300 active:scale-[0.98]"
             >
               ✕
             </button>

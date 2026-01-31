@@ -1,15 +1,22 @@
 import React from "react";
-import Header from "../components/Header";
-import Footer from "../components/Footer";
+import { Outlet } from "react-router-dom";
 
-function MainLayout({ children }) {
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
+import MiniPlayer from "../components/Player/MiniPlayer";
+
+export default function MainLayout() {
   return (
-    <div className="flex min-h-screen flex-col">
-      <Header />
-      <main className="flex-1">{children}</main>
+    <div className="flex min-h-screen flex-col bg-white">
+      <Navbar />
+      <main className="flex-1 pb-32">
+        <Outlet />
+      </main>
       <Footer />
+      <MiniPlayer />
     </div>
   );
 }
+
 
 export default MainLayout;

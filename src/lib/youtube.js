@@ -7,11 +7,11 @@ const youtubeApi = axios.create({
 
 const getApiKey = () => {
   const key = import.meta.env.VITE_YOUTUBE_API_KEY;
-  if (!key) throw new Error("Missing YouTube API key (VITE_YOUTUBE_API_KEY)");
+  if (!key) throw new Error("YouTube API kaliti topilmadi (VITE_YOUTUBE_API_KEY)");
   return key;
 };
 
-export const getErrorMessage = (err, fallback = "Request failed") =>
+export const getErrorMessage = (err, fallback = "So‘rov bajarilmadi") =>
   err?.response?.data?.error?.message || err?.message || fallback;
 
 /**
