@@ -1,11 +1,10 @@
-import React from "react";
 import { Outlet } from "react-router-dom";
 
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import MiniPlayer from "../components/Player/MiniPlayer";
 
-export default function MainLayout() {
+function MainLayout() {
   return (
     <div className="flex min-h-screen flex-col bg-white">
       <Navbar />
@@ -17,6 +16,5 @@ export default function MainLayout() {
     </div>
   );
 }
-
 
 export default MainLayout;

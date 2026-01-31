@@ -3,10 +3,10 @@ import { Link, NavLink, useNavigate } from "react-router-dom";
 
 const navLinks = [
   { path: "/", label: "Bosh sahifa" },
+  { path: "/about", label: "Biz haqimizda" },
   { path: "/music", label: "Musiqa" },
   { path: "/shorts", label: "Videolar" },
-  { path: "/about", label: "Biz haqimizda" },
-  { path: "/sevimlilar", label: "Sevimlilar" },
+
 ];
 
 function Navbar() {
@@ -50,19 +50,6 @@ function Navbar() {
             ))}
           </div>
 
-          <form
-            onSubmit={handleSearch}
-            className="hidden lg:flex items-center gap-2 bg-gray-100 px-3 py-2 rounded-full border border-gray-200 transition-all duration-200 focus-within:border-blue-600"
-          >
-            <span className="text-gray-500">🔎</span>
-            <input
-              type="search"
-              placeholder="Musiqa, video qidiring..."
-              value={query}
-              onChange={(event) => setQuery(event.target.value)}
-              className="bg-transparent outline-none text-sm text-gray-700 w-56"
-            />
-          </form>
 
           <div className="flex items-center gap-3 lg:hidden">
             <button

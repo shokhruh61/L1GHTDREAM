@@ -8,7 +8,9 @@ export default function VideoGallery() {
   return (
     <section className="py-12 px-4">
       <div className="max-w-6xl mx-auto">
-        <h2 className="text-4xl font-bold mb-12 text-center">M1NOR FM videolari</h2>
+        <h2 className="text-4xl font-bold mb-12 text-center">
+          M1NOR FM videolari
+        </h2>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {videos.map((video) => (
@@ -17,18 +19,16 @@ export default function VideoGallery() {
               className="overflow-hidden rounded-xl shadow-lg transition-all duration-200 hover:shadow-xl hover:scale-[1.02]"
             >
               <div className="block w-full h-48 relative group cursor-pointer overflow-hidden">
-                <video 
-                  src={video.url} 
+                <video
+                  src={video.url}
                   alt={video.title}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                 />
-                <div 
+                <div
                   onClick={() => setSelectedVideo(video)}
                   className="absolute inset-0 bg-opacity-40 group-hover:bg-opacity-60 transition-all duration-200 flex items-center justify-center cursor-pointer"
                 >
-                  <button
-                    className="text-white text-4xl cursor-pointer transition-all duration-200 hover:scale-110 active:scale-[0.98]"
-                  >
+                  <button className="text-white text-4xl cursor-pointer transition-all duration-200 hover:scale-110 active:scale-[0.98]">
                     ▶
                   </button>
                 </div>
@@ -54,11 +54,11 @@ export default function VideoGallery() {
 
       {/* Video Modal Player */}
       {selectedVideo && (
-        <div 
+        <div
           className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 p-4"
           onClick={() => setSelectedVideo(null)}
         >
-          <div 
+          <div
             className="bg-black rounded-lg w-full max-w-4xl relative"
             onClick={(e) => e.stopPropagation()}
           >
@@ -68,14 +68,17 @@ export default function VideoGallery() {
             >
               ✕
             </button>
-            
+
             <div className="aspect-video w-full">
               <iframe
                 width="100%"
                 height="100%"
-                src={selectedVideo.url.includes("youtu") 
-                  ? selectedVideo.url.replace("youtu.be/", "youtube.com/embed/").split("?")[0]
-                  : selectedVideo.url
+                src={
+                  selectedVideo.url.includes("youtu")
+                    ? selectedVideo.url
+                        .replace("youtu.be/", "youtube.com/embed/")
+                        .split("?")[0]
+                    : selectedVideo.url
                 }
                 title={selectedVideo.title}
                 frameBorder="0"

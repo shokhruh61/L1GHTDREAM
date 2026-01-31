@@ -22,11 +22,11 @@ function About() {
             <h2 className="text-3xl font-bold text-gray-900 mb-6">Bizning missiyamiz</h2>
             <p className="text-gray-700 text-lg leading-relaxed mb-6">
               M1NOR FM butun dunyodagi musiqa va kontent ishqibozlari uchun qulay va yoqimli tajriba yaratishga intiladi.
-              Biz yuqori sifatli ko‘ngilochar kontent hammaga, har doim va har joyda mavjud bo‘lishiga ishonamiz.
+              Biz yuqori sifatli ko'ngilochar kontent hammaga, har doim va har joyda mavjud bo'lishiga ishonamiz.
             </p>
             <p className="text-gray-700 text-lg leading-relaxed mb-6">
               Platformamiz eng yangi musiqiy videolar, chiroyli fotosuratlar va qiziqarli kontentni
-              dunyo bo‘ylab iste’dodli ijodkorlar va kanallardan jamlaydi.
+              dunyo bo'ylab iste'dodli ijodkorlar va kanallardan jamlaydi.
             </p>
 
             <h3 className="text-2xl font-bold text-gray-900 mb-4">Biz nimalarni taklif qilamiz</h3>
@@ -37,7 +37,7 @@ function About() {
               </li>
               <li className="flex items-start gap-3">
                 <span className="text-2xl">🎵</span>
-                <span className="text-gray-700"><strong>Ko‘p-kanalli qo‘llab-quvvatlash:</strong> Turli manbalar</span>
+                <span className="text-gray-700"><strong>Ko'p-kanalli qo'llab-quvvatlash:</strong> Turli manbalar</span>
               </li>
               <li className="flex items-start gap-3">
                 <span className="text-2xl">🖼️</span>
@@ -64,7 +64,7 @@ function About() {
             
             <div className="space-y-6">
               <div className="bg-gray-50 p-6 rounded-xl shadow-sm transition-all duration-200 hover:shadow-lg hover:scale-[1.02]">
-                <h3 className="text-xl font-bold text-blue-600 mb-3">Sifat birinchi o‘rinda</h3>
+                <h3 className="text-xl font-bold text-blue-600 mb-3">Sifat birinchi o'rinda</h3>
                 <p className="text-gray-700">
                   Foydalanuvchilarga faqat eng yuqori sifatli kontent taqdim etiladi.
                   Har bir video va rasm sinchkovlik bilan saralanadi.
@@ -90,60 +90,37 @@ function About() {
                 <h3 className="text-xl font-bold text-blue-600 mb-3">Hamjamiyat</h3>
                 <p className="text-gray-700">
                   Ijodkorlar va tomoshabinlardan iborat kuchli hamjamiyat qurishga ishonamiz.
-                  Birgalikda musiqa, san’at va raqamli madaniyatni qadrlaymiz.
+                  Birgalikda musiqa, san'at va raqamli madaniyatni qadrlaymiz.
                 </p>
               </div>
             </div>
           </div>
-        </div>
-
-        {/* Team Section */}
-        <div className="mt-16 py-12 border-t border-gray-300">
-          <h2 className="text-3xl font-bold text-gray-900 text-center mb-12">Jamoamiz</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            {[
-              { name: 'Alex', role: 'Asoschi va direktor', emoji: '👨‍💼' },
-              { name: 'Sarah', role: 'Mahsulot menejeri', emoji: '👩‍💼' },
-              { name: 'John', role: 'Yetakchi dasturchi', emoji: '👨‍💻' },
-              { name: 'Lisa', role: 'Kontent menejeri', emoji: '👩‍🎨' }
-            ].map((member, idx) => (
-              <div key={idx} className="bg-gray-50 p-6 rounded-xl shadow-sm transition-all duration-200 hover:shadow-lg hover:scale-[1.02] text-center">
-                <div className="text-5xl mb-3">{member.emoji}</div>
-                <h3 className="text-xl font-bold text-gray-900 mb-2">{member.name}</h3>
-                <p className="text-gray-600">{member.role}</p>
-              </div>
-            ))}
-          </div>
-        </div>
+        </div>        
       </div>
 
       {/* CTA Section */}
       <div className="bg-gray-100 text-gray-900 py-16 border-t border-gray-200">
         <div className="container mx-auto px-4 text-center">
-          <h2 className="text-4xl font-bold mb-6">Ko‘proq bilishni xohlaysizmi?</h2>
+          <h2 className="text-4xl font-bold mb-6">Ko'proq bilishni xohlaysizmi?</h2>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link 
               to="/music"
               className="bg-blue-600 text-white font-bold py-3 px-8 rounded-lg cursor-pointer transition-all duration-200 hover:bg-blue-700 hover:scale-[1.02] active:scale-[0.98]"
             >
-              Musiqani ko‘rish
+              Musiqani ko'rish
             </Link>
-            <Link 
+            <Link
               to="/pictures"
- codex/add-missing-features-to-the-site-jfkoe5
-              className="bg-gray-300 text-gray-900 font-bold py-3 px-8 rounded-lg cursor-pointer transition-all duration-200 hover:bg-gray-400 hover:scale-[1.02] active:scale-[0.98]"
-
               className="bg-gray-300 hover:bg-gray-400 text-gray-900 font-bold py-3 px-8 rounded-lg cursor-pointer transition-all duration-300"
-
- main
             >
-              Rasmlarni ko‘rish
+              Rasmlarni ko'rish
             </Link>
           </div>
         </div>
       </div>
     </div>
-  )
+  );
 }
 
 export default About
+

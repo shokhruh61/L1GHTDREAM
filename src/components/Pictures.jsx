@@ -26,7 +26,10 @@ export default function Pictures() {
 
   const totalPages = Math.ceil(images.length / IMAGES_PER_PAGE);
   const startIndex = (currentPage - 1) * IMAGES_PER_PAGE;
-  const paginatedImages = images.slice(startIndex, startIndex + IMAGES_PER_PAGE);
+  const paginatedImages = images.slice(
+    startIndex,
+    startIndex + IMAGES_PER_PAGE,
+  );
 
   const handleImageLoad = (id) => {
     setLoadedImages((prev) => new Set(prev).add(id));
@@ -108,11 +111,11 @@ export default function Pictures() {
                 className="group bg-white rounded-xl shadow-md transition-all duration-200 transform overflow-hidden animate-fade-in hover:shadow-lg hover:scale-[1.02]"
               >
                 {/* Image Container */}
-                <div className="relative w-full h-56 overflow-hidden bg-gray-200">
+                <div className="relative w-full h-56 overflow-hidden`">
                   {!isLoaded && (
                     <div className="absolute inset-0 from-gray-300 via-gray-200 to-gray-300 animate-pulse"></div>
                   )}
-                  
+
                   <img
                     src={image.url}
                     alt={image.alt}
@@ -123,10 +126,10 @@ export default function Pictures() {
                     onLoad={() => handleImageLoad(image.id)}
                     onError={(e) => {
                       handleImageLoad(image.id);
-                      e.target.style.display = 'none';
+                      e.target.style.display = "none";
                     }}
                   />
-                  
+
                   {/* Hover Overlay */}
                   <div className="absolute inset-0 bg-opacity-0 group-hover:bg-opacity-20 transition-all duration-300 flex items-center justify-center">
                     <div className="text-white text-4xl opacity-0 group-hover:opacity-100 transition-opacity">
@@ -140,21 +143,21 @@ export default function Pictures() {
                   <h3 className="text-lg font-bold text-gray-900 mb-1 line-clamp-2 group-hover:text-blue-600 transition-colors">
                     {image.title}
                   </h3>
-                  
+
                   <p className="text-gray-600 text-sm mb-4 line-clamp-2 min-h-[40px]">
                     {image.description}
                   </p>
-                  
+
                   {/* Action Buttons */}
                   <div className="flex gap-2 mb-3">
                     <button
                       onClick={() => handleDownload(image.url, image.title)}
-                    className="flex-1 flex items-center justify-center gap-1 bg-blue-600 text-white px-3 py-2 rounded-lg transition-all duration-200 font-semibold text-sm cursor-pointer hover:bg-blue-700 hover:scale-[1.02] active:scale-[0.98]"
-                    title="Rasmni yuklab olish"
-                  >
-                    ⬇️
-                  </button>
-                    
+                      className="flex-1 flex items-center justify-center gap-1 bg-blue-600 text-white px-3 py-2 rounded-lg transition-all duration-200 font-semibold text-sm cursor-pointer hover:bg-blue-700 hover:scale-[1.02] active:scale-[0.98]"
+                      title="Rasmni yuklab olish"
+                    >
+                      ⬇️
+                    </button>
+
                     <button
                       onClick={() => handleLike(image.id)}
                       className={`flex-1 flex items-center justify-center gap-1 px-3 py-2 rounded-lg transition-all duration-200 font-semibold text-sm cursor-pointer hover:scale-[1.02] active:scale-[0.98] ${
@@ -168,10 +171,12 @@ export default function Pictures() {
                       <span>{imageLikes[image.id] || 0}</span>
                     </button>
                   </div>
-                  
+
                   {/* Meta Info */}
                   <div className="flex justify-between items-center text-xs text-gray-500 border-t border-gray-200 pt-2">
-                    <span className="bg-gray-100 px-2 py-1 rounded">#{image.id}</span>
+                    <span className="bg-gray-100 px-2 py-1 rounded">
+                      #{image.id}
+                    </span>
                     <span className="text-gray-400">{image.uploadDate}</span>
                   </div>
                 </div>
@@ -184,7 +189,9 @@ export default function Pictures() {
         {images.length === 0 && (
           <div className="text-center py-16">
             <div className="text-6xl mb-4">📭</div>
-            <p className="text-2xl text-gray-600 font-semibold">Hech narsa topilmadi</p>
+            <p className="text-2xl text-gray-600 font-semibold">
+              Hech narsa topilmadi
+            </p>
           </div>
         )}
 
@@ -225,7 +232,9 @@ export default function Pictures() {
 
         {/* Stats */}
         <p className="text-center text-gray-600 mt-6 font-semibold">
-          {startIndex + 1} - {Math.min(startIndex + IMAGES_PER_PAGE, images.length)} / {images.length} ta rasm
+          {startIndex + 1} -{" "}
+          {Math.min(startIndex + IMAGES_PER_PAGE, images.length)} /{" "}
+          {images.length} ta rasm
         </p>
       </div>
 

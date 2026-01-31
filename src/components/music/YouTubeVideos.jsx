@@ -3,12 +3,17 @@ import { Link, useNavigate } from "react-router-dom";
 import { fetchMusicVideos, getErrorMessage } from "../../lib/youtube";
 import { usePlayer } from "../../context/PlayerContext";
 
-const YouTubeVideos = ({ channelIds = [], maxResults = 12 }) => {
+const YouTubeVideos = ({
+  channelIds = [],
+  maxResults = 12,
+  showAllByDefault = false,
+  hidePagination = false,
+}) => {
   const [videos, setVideos] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
-  const [showAll, setShowAll] = useState(false);
+  const [showAll, setShowAll] = useState(showAllByDefault);
   const [nextPageToken, setNextPageToken] = useState(null);
   const [loadingMore, setLoadingMore] = useState(false);
   const navigate = useNavigate();
@@ -32,12 +37,23 @@ const YouTubeVideos = ({ channelIds = [], maxResults = 12 }) => {
         }
 
         if (validChannels.length === 1) {
-          const { items, nextPageToken: token } = await fetchMusicVideos({
-            channelId: validChannels[0],
-            maxResults: pageSize,
-          });
-          setVideos(items);
-          setNextPageToken(token);
+          const allItems = [];
+          let token = null;
+          do {
+            const response = await fetchMusicVideos({
+              channelId: validChannels[0],
+              maxResults: pageSize,
+              pageToken: token || undefined,
+            });
+            allItems.push(...(response.items || []));
+            token = response.nextPageToken || null;
+          } while (hidePagination && token);
+
+          if (!hidePagination) {
+            setNextPageToken(token);
+          }
+
+          setVideos(allItems);
           return;
         }
 
@@ -63,7 +79,7 @@ const YouTubeVideos = ({ channelIds = [], maxResults = 12 }) => {
     };
 
     fetchVideos();
-  }, [channelIds, pageSize]);
+  }, [channelIds, pageSize, hidePagination]);
 
   const loadMore = async () => {
     if (!nextPageToken || loadingMore) return;
@@ -96,7 +112,7 @@ const YouTubeVideos = ({ channelIds = [], maxResults = 12 }) => {
   const totalPages = Math.max(1, Math.ceil(videos.length / pageSize));
   const startIndex = (currentPage - 1) * pageSize;
   const endIndex = startIndex + pageSize;
-  const displayedVideos = showAll ? videos : videos.slice(startIndex, endIndex);
+  const displayedVideos = showAll || hidePagination ? videos : videos.slice(startIndex, endIndex);
 
   const goToPage = (page) => {
     const next = Math.max(1, Math.min(page, totalPages));
@@ -151,17 +167,19 @@ const YouTubeVideos = ({ channelIds = [], maxResults = 12 }) => {
 
   return (
     <div className="w-full">
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-6">
-        <div className="text-sm text-gray-600">
-          {displayedVideos.length} ta video ko‘rsatilmoqda (jami {videos.length})
+      {!hidePagination && (
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-6">
+          <div className="text-sm text-gray-600">
+            {displayedVideos.length} ta video ko‘rsatilmoqda (jami {videos.length})
+          </div>
+          <button
+            onClick={() => setShowAll((v) => !v)}
+            className="px-4 py-2 rounded-lg border border-gray-300 bg-white text-sm font-semibold cursor-pointer transition-all duration-200 hover:bg-gray-100 hover:scale-[1.02] active:scale-[0.98]"
+          >
+            {showAll ? "Sahifalab ko‘rsatish" : "Barchasini ko‘rsatish"}
+          </button>
         </div>
-        <button
-          onClick={() => setShowAll((v) => !v)}
-          className="px-4 py-2 rounded-lg border border-gray-300 bg-white text-sm font-semibold cursor-pointer transition-all duration-200 hover:bg-gray-100 hover:scale-[1.02] active:scale-[0.98]"
-        >
-          {showAll ? "Sahifalab ko‘rsatish" : "Barchasini ko‘rsatish"}
-        </button>
-      </div>
+      )}
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         {displayedVideos.map((video) => {
@@ -246,7 +264,7 @@ const YouTubeVideos = ({ channelIds = [], maxResults = 12 }) => {
         })}
       </div>
 
-      {!showAll && videos.length > pageSize && (
+      {!hidePagination && !showAll && videos.length > pageSize && (
         <div className="flex flex-wrap items-center justify-center gap-2 mt-10">
           <button
             onClick={() => goToPage(currentPage - 1)}
@@ -268,7 +286,7 @@ const YouTubeVideos = ({ channelIds = [], maxResults = 12 }) => {
         </div>
       )}
 
-      {nextPageToken && (
+      {!hidePagination && nextPageToken && (
         <div className="flex justify-center mt-6">
           <button
             onClick={loadMore}

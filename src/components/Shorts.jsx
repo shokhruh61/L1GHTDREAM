@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { fetchShortVideos, getErrorMessage } from "../lib/youtube";
 import { usePlayer } from "../context/PlayerContext";
 
@@ -8,27 +8,29 @@ export default function Shorts() {
   const [error, setError] = useState(null);
   const [selectedShort, setSelectedShort] = useState(null);
   const [selectedIndex, setSelectedIndex] = useState(-1);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [showAll, setShowAll] = useState(false);
-  const [nextPageToken, setNextPageToken] = useState(null);
-  const [loadingMore, setLoadingMore] = useState(false);
+  const [isShortPlaying, setIsShortPlaying] = useState(false);
+  const iframeRef = useRef(null);
   const { toggleFavorite, isFavorite } = usePlayer();
 
   const channelId = "UCcSWtzdfWI77YBl7vTV83OA";
-  const pageSize = 12;
 
   useEffect(() => {
     const loadShorts = async () => {
       try {
         setLoading(true);
         setError(null);
-        const { items, nextPageToken } = await fetchShortVideos({
-          channelId,
-          maxResults: 24,
-        });
-        setShorts(items);
-        setNextPageToken(nextPageToken);
-        setCurrentPage(1);
+        const allItems = [];
+        let token = null;
+        do {
+          const response = await fetchShortVideos({
+            channelId,
+            maxResults: 24,
+            pageToken: token || undefined,
+          });
+          allItems.push(...(response.items || []));
+          token = response.nextPageToken || null;
+        } while (token);
+        setShorts(allItems);
       } catch (err) {
         setError(getErrorMessage(err, "Qisqa videolarni yuklab bo‘lmadi"));
       } finally {
@@ -39,47 +41,33 @@ export default function Shorts() {
     loadShorts();
   }, []);
 
-  const loadMore = async () => {
-    if (!nextPageToken || loadingMore) return;
-    try {
-      setLoadingMore(true);
-      const { items, nextPageToken: token } = await fetchShortVideos({
-        channelId,
-        maxResults: 24,
-        pageToken: nextPageToken,
-      });
-      setShorts((prev) => [...prev, ...items]);
-      setNextPageToken(token);
-    } catch (err) {
-      setError(getErrorMessage(err, "Ko‘proq qisqa video yuklab bo‘lmadi"));
-    } finally {
-      setLoadingMore(false);
-    }
-  };
-
-  const openShort = (short, index) => {
+  const openShort = useCallback((short, index) => {
     setSelectedShort(short);
     setSelectedIndex(index);
-  };
+    setIsShortPlaying(true);
+  }, []);
 
-  const closeShort = () => {
+  const closeShort = useCallback(() => {
     setSelectedShort(null);
     setSelectedIndex(-1);
-  };
+    setIsShortPlaying(false);
+  }, []);
 
-  const goPrev = () => {
+  const goPrev = useCallback(() => {
     if (selectedIndex <= 0) return;
     const nextIndex = selectedIndex - 1;
     setSelectedIndex(nextIndex);
     setSelectedShort(shorts[nextIndex]);
-  };
+    setIsShortPlaying(true);
+  }, [selectedIndex, shorts]);
 
-  const goNext = () => {
+  const goNext = useCallback(() => {
     if (selectedIndex >= shorts.length - 1) return;
     const nextIndex = selectedIndex + 1;
     setSelectedIndex(nextIndex);
     setSelectedShort(shorts[nextIndex]);
-  };
+    setIsShortPlaying(true);
+  }, [selectedIndex, shorts]);
 
   useEffect(() => {
     if (!selectedShort) return;
@@ -90,6 +78,20 @@ export default function Shorts() {
       } else if (e.key === "ArrowDown") {
         e.preventDefault();
         goNext();
+      } else if (e.code === "Space" || e.key === " ") {
+        e.preventDefault();
+        const nextPlaying = !isShortPlaying;
+        setIsShortPlaying(nextPlaying);
+        if (iframeRef.current?.contentWindow) {
+          iframeRef.current.contentWindow.postMessage(
+            JSON.stringify({
+              event: "command",
+              func: nextPlaying ? "playVideo" : "pauseVideo",
+              args: "",
+            }),
+            "*"
+          );
+        }
       } else if (e.key === "Escape") {
         e.preventDefault();
         closeShort();
@@ -97,17 +99,9 @@ export default function Shorts() {
     };
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
-  }, [selectedShort, selectedIndex, shorts]);
+  }, [selectedShort, goPrev, goNext, closeShort, isShortPlaying]);
 
-  const totalPages = Math.max(1, Math.ceil(shorts.length / pageSize));
-  const startIndex = (currentPage - 1) * pageSize;
-  const endIndex = startIndex + pageSize;
-  const displayedShorts = showAll ? shorts : shorts.slice(startIndex, endIndex);
-
-  const goToPage = (page) => {
-    const next = Math.max(1, Math.min(page, totalPages));
-    setCurrentPage(next);
-  };
+  const displayedShorts = shorts;
 
   if (loading) {
     return (
@@ -130,7 +124,9 @@ export default function Shorts() {
   if (error) {
     return (
       <section className="min-h-screen bg-white flex items-center justify-center">
-        <div className="text-lg font-semibold text-red-600">Xatolik: {error}</div>
+        <div className="text-lg font-semibold text-red-600">
+          Xatolik: {error}
+        </div>
       </section>
     );
   }
@@ -142,27 +138,23 @@ export default function Shorts() {
           <h2 className="text-4xl font-bold text-center sm:text-left">
             Qisqa videolar
           </h2>
-          <div className="flex items-center gap-2 justify-center sm:justify-end">
-            <button
-              onClick={() => setShowAll((v) => !v)}
-              className="px-4 py-2 rounded-lg border border-gray-300 bg-white text-sm font-semibold cursor-pointer transition-all duration-200 hover:bg-gray-100 hover:scale-[1.02] active:scale-[0.98]"
-            >
-              {showAll ? "Sahifalab ko‘rsatish" : "Barchasini ko‘rsatish"}
-            </button>
-          </div>
         </div>
 
         {shorts.length === 0 && (
           <div className="bg-white border border-dashed border-gray-300 rounded-2xl p-10 text-center">
             <div className="text-5xl mb-4">🎬</div>
-            <p className="text-lg font-semibold text-gray-700">Hech narsa topilmadi</p>
-            <p className="text-sm text-gray-500 mt-2">Bir necha daqiqadan so‘ng qayta urinib ko‘ring.</p>
+            <p className="text-lg font-semibold text-gray-700">
+              Hech narsa topilmadi
+            </p>
+            <p className="text-sm text-gray-500 mt-2">
+              Bir necha daqiqadan so‘ng qayta urinib ko‘ring.
+            </p>
           </div>
         )}
 
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {displayedShorts.map((short, index) => {
-            const globalIndex = showAll ? index : startIndex + index;
+            const globalIndex = index;
             const thumbnail =
               short.snippet?.thumbnails?.high?.url ||
               short.snippet?.thumbnails?.medium?.url ||
@@ -193,7 +185,7 @@ export default function Shorts() {
                   <p className="text-xs text-gray-300">
                     {new Date(short.snippet?.publishedAt).toLocaleDateString(
                       "en-US",
-                      { year: "numeric", month: "short", day: "numeric" },
+                      { year: "numeric", month: "short", day: "numeric" }
                     )}
                   </p>
                 </div>
@@ -213,7 +205,9 @@ export default function Shorts() {
                     });
                   }}
                   className={`absolute top-3 right-3 px-3 py-1 rounded-full text-xs font-semibold cursor-pointer transition-all duration-200 hover:scale-[1.05] active:scale-[0.98] ${
-                    favoriteActive ? "bg-red-600 text-white" : "bg-white/90 text-gray-700"
+                    favoriteActive
+                      ? "bg-red-600 text-white"
+                      : "bg-white/90 text-gray-700"
                   }`}
                 >
                   {favoriteActive ? "❤️" : "🤍"}
@@ -222,40 +216,6 @@ export default function Shorts() {
             );
           })}
         </div>
-
-        {!showAll && shorts.length > pageSize && (
-          <div className="flex flex-wrap items-center justify-center gap-2 mt-10">
-            <button
-              onClick={() => goToPage(currentPage - 1)}
-              disabled={currentPage === 1}
-              className="px-4 py-2 rounded-lg bg-blue-600 text-white cursor-pointer transition-all duration-200 hover:bg-blue-700 active:scale-[0.98] disabled:bg-gray-400 disabled:cursor-not-allowed"
-            >
-              Oldingi
-            </button>
-            <div className="px-3 py-2 text-sm font-semibold text-gray-700">
-              Sahifa {currentPage} / {totalPages}
-            </div>
-            <button
-              onClick={() => goToPage(currentPage + 1)}
-              disabled={currentPage === totalPages}
-              className="px-4 py-2 rounded-lg bg-blue-600 text-white cursor-pointer transition-all duration-200 hover:bg-blue-700 active:scale-[0.98] disabled:bg-gray-400 disabled:cursor-not-allowed"
-            >
-              Keyingi
-            </button>
-          </div>
-        )}
-
-        {nextPageToken && (
-          <div className="flex justify-center mt-6">
-            <button
-              onClick={loadMore}
-              disabled={loadingMore}
-              className="px-6 py-2 rounded-lg border border-gray-300 bg-white text-sm font-semibold cursor-pointer transition-all duration-200 hover:bg-gray-100 hover:scale-[1.02] active:scale-[0.98] disabled:opacity-60"
-            >
-              {loadingMore ? "Yuklanmoqda..." : "Yana yuklash"}
-            </button>
-          </div>
-        )}
       </div>
 
       {selectedShort && (
@@ -292,7 +252,8 @@ export default function Shorts() {
               </button>
             </div>
             <iframe
-              src={`https://www.youtube.com/embed/${selectedShort.id.videoId}?autoplay=1`}
+              ref={iframeRef}
+              src={`https://www.youtube.com/embed/${selectedShort.id.videoId}?autoplay=1&enablejsapi=1`}
               className="w-full h-full"
               frameBorder="0"
               allow="autoplay; encrypted-media; picture-in-picture"
