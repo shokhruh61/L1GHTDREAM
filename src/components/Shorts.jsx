@@ -32,7 +32,7 @@ export default function Shorts() {
         } while (token);
         setShorts(allItems);
       } catch (err) {
-        setError(getErrorMessage(err, "Qisqa videolarni yuklab bo‘lmadi"));
+        setError(getErrorMessage(err, "Qisqa videolarni yuklab boâ€˜lmadi"));
       } finally {
         setLoading(false);
       }
@@ -105,14 +105,14 @@ export default function Shorts() {
 
   if (loading) {
     return (
-      <section className="min-h-screen bg-white py-12 px-4">
+      <section className="min-h-screen bg-slate-950 py-12 px-4 text-white">
         <div className="max-w-7xl mx-auto">
-          <div className="h-8 w-32 bg-gray-200 rounded mb-8 animate-pulse" />
+          <div className="h-8 w-32 bg-slate-700/40 rounded mb-8 animate-pulse" />
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             {Array.from({ length: 8 }).map((_, index) => (
               <div
                 key={`short-skeleton-${index}`}
-                className="aspect-[9/16] bg-gray-200 rounded-xl animate-pulse"
+                className="aspect-[9/16] bg-slate-700/40 rounded-xl animate-pulse"
               />
             ))}
           </div>
@@ -123,7 +123,7 @@ export default function Shorts() {
 
   if (error) {
     return (
-      <section className="min-h-screen bg-white flex items-center justify-center">
+      <section className="min-h-screen bg-slate-950 flex items-center justify-center">
         <div className="text-lg font-semibold text-red-600">
           Xatolik: {error}
         </div>
@@ -132,7 +132,7 @@ export default function Shorts() {
   }
 
   return (
-    <section className="py-12 px-4 bg-gray-50 min-h-screen">
+    <section className="py-12 px-4 bg-slate-950 min-h-screen text-white">
       <div className="max-w-7xl mx-auto">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
           <h2 className="text-4xl font-bold text-center sm:text-left">
@@ -141,13 +141,13 @@ export default function Shorts() {
         </div>
 
         {shorts.length === 0 && (
-          <div className="bg-white border border-dashed border-gray-300 rounded-2xl p-10 text-center">
-            <div className="text-5xl mb-4">🎬</div>
-            <p className="text-lg font-semibold text-gray-700">
+          <div className="bg-slate-900/70 border border-dashed border-white/20 rounded-2xl p-10 text-center">
+            <div className="text-5xl mb-4">ðŸŽ¬</div>
+            <p className="text-lg font-semibold text-slate-100">
               Hech narsa topilmadi
             </p>
-            <p className="text-sm text-gray-500 mt-2">
-              Bir necha daqiqadan so‘ng qayta urinib ko‘ring.
+            <p className="text-sm text-slate-400 mt-2">
+              Bir necha daqiqadan soâ€˜ng qayta urinib koâ€˜ring.
             </p>
           </div>
         )}
@@ -210,7 +210,7 @@ export default function Shorts() {
                       : "bg-white/90 text-gray-700"
                   }`}
                 >
-                  {favoriteActive ? "❤️" : "🤍"}
+                  {favoriteActive ? "â¤ï¸" : "ðŸ¤"}
                 </button>
               </div>
             );
@@ -240,7 +240,7 @@ export default function Shorts() {
                 className="w-10 h-10 rounded-full bg-black/60 text-white flex items-center justify-center cursor-pointer transition-all duration-200 hover:bg-black/80 active:scale-[0.98] disabled:opacity-40 disabled:cursor-not-allowed"
                 aria-label="Oldingi short"
               >
-                ↑
+                â†‘
               </button>
               <button
                 onClick={goNext}
@@ -248,7 +248,7 @@ export default function Shorts() {
                 className="w-10 h-10 rounded-full bg-black/60 text-white flex items-center justify-center cursor-pointer transition-all duration-200 hover:bg-black/80 active:scale-[0.98] disabled:opacity-40 disabled:cursor-not-allowed"
                 aria-label="Keyingi short"
               >
-                ↓
+                â†“
               </button>
             </div>
             <iframe
