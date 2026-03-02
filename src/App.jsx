@@ -7,7 +7,7 @@ import MainLayout from "./Layouts/MainLayout";
 import VideoPlayer from "./Pages/VideoPlayer";
 import Videos from "./Pages/Videos";
 import Contact from "./Pages/Contact";
-import Pictures from "./components/Pictures";
+import StyleFinder from "./Pages/StyleFinder";
 
 function App() {
   return (
@@ -17,7 +17,7 @@ function App() {
         <Route path="/music" element={<Music />} />
         <Route path="/videos" element={<Videos />} />
         <Route path="/shorts" element={<Shorts />} />
-        <Route path="/pictures" element={<Pictures />} />
+        <Route path="/style-finder" element={<StyleFinder />} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/video/:videoId" element={<VideoPlayer />} />

@@ -5,7 +5,7 @@ const links = [
   { to: "/music", label: "Music" },
   { to: "/videos", label: "Videos" },
   { to: "/shorts", label: "Shorts" },
-  { to: "/pictures", label: "Pictures" },
+  { to: "/style-finder", label: "Style Finder" },
   { to: "/about", label: "About" },
   { to: "/contact", label: "Contact" },
 ];
